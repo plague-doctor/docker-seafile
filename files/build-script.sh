@@ -8,11 +8,8 @@ rm -f /var/log/dpkg.log
 rm -rf /var/log/apt
 rm -rf /var/cache/apt
 
-mkdir -p /etc/service/seafile
-mkdir -p /etc/service/seahub
-mkdir -p /etc/service/nginx
-mkdir -p /opt/seafile 
-mkdir -p /opt/image
+mkdir -p /etc/service/{seafile,seahub,nginx}
+mkdir -p /opt/{seafile,image}
 
 adduser --disabled-password --gecos "" seafile
 
@@ -20,12 +17,12 @@ chown seafile:seafile /opt/seafile
 chown seafile:seafile /opt/image
 
 cp /tmp/files/seafile.start /etc/service/seafile/run
-cp /tmp/files/seahub.start /opt/image
 
 cp /tmp/files/service-nginx.sh /etc/service/nginx/run
 cp /tmp/files/seafile-nginx.conf /etc/nginx/sites-available/seafile
 
 ln -s /etc/nginx/sites-available/seafile /etc/nginx/sites-enabled/seafile
+rm -f /etc/nginx/sites-enabled/default
 
 deploy-bin() {
     filename="$1"
@@ -46,10 +43,16 @@ deploy-bin-image "upgrade.sh"
 deploy-bin-image "upgrade_user.sh"
 deploy-bin-image "find-upgrade.py"
 deploy-bin-image "clean.sh"
+deploy-bin-image "seafile.stop"
+deploy-bin-image "seahub.stop"
+deploy-bin-image "seafile.start"
+deploy-bin-image "seahub.start"
+deploy-bin-image "seafile-env.sh"
+deploy-bin-image "backup.sh"
 
 ln -s "/etc/my_init.d/init_data.sh" "/init"
 ln -s "/opt/image/upgrade.sh" "/upgrade"
 ln -s "/opt/image/clean.sh" "/clean"
+ln -s "/opt/image/backup.sh" "/backup"
 
 rm -rf "/tmp/files"
-

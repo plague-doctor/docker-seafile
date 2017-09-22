@@ -9,4 +9,3 @@ fail() {
 }
 
 sudo -E -s -u seafile "${UPGRADE_USER}"
-

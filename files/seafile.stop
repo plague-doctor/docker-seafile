@@ -1,4 +1,5 @@
 #!/bin/bash
 
-su - seafile  -c"/opt/seafile/seafile-server-latest/seafile.sh stop"
+source /opt/image/seafile-env.sh
 
+su - seafile  -c"/opt/seafile/seafile-server-latest/seafile.sh stop"

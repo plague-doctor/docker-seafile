@@ -70,4 +70,3 @@ then
         echo "If you made a backup before trying to upgrade, it's better to restore your backup."
     fi
 fi
-

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /opt/image/seafile-env.sh
+
 ulimit -n 30000
 su - seafile -c"/opt/seafile/seafile-server-latest/seafile.sh start"
 r=${PIPESTATUS[0]}
@@ -13,4 +15,3 @@ done
 while [ true ]; do
   sleep 10
 done
-

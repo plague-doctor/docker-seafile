@@ -1,3 +1,5 @@
 #!/bin/bash
 
+source /opt/image/seafile-env.sh
+
 su - seafile -c"/opt/seafile/seafile-server-latest/seahub.sh stop"

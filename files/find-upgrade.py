@@ -73,9 +73,9 @@ def main():
 
 def test():
     import unittest
-    
+
     class TestUpgrade(unittest.TestCase):
-        upgrade_dir_content_classical = [ 
+        upgrade_dir_content_classical = [
             'add_collate.sh',
             'db_update_1.3_1.4.py',
             'db_update_helper.py',

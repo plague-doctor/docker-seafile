@@ -4,9 +4,11 @@ APP_DIR="/opt/seafile"
 TOKEN="${APP_DIR}/TOKEN"
 CCNET_CONF="${APP_DIR}/conf/ccnet.conf"
 SEAHUB_CONF="${APP_DIR}/conf/seahub_settings.py"
+SEADAV_CONF="${APP_DIR}/conf/seafdav.conf"
 TEMP_DIR="/tmp/seafile-install"
 
-[ -z "${SEAFILE_VERSION}" ] && SEAFILE_VERSION="6.0.5"
+[ -z "${SEAFILE_VERSION}" ] && SEAFILE_VERSION="6.1.2"
+[ -z "${SEAFILE_PORT}" ] && SEAFILE_PORT="8001"
 
 SEAFILE_FILENAME="seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz"
 SEAFILE_TARGZ="https://download.seadrive.org/${SEAFILE_FILENAME}"
@@ -53,6 +55,13 @@ then
     cp "${SEAHUB_START_SCRIPT}" "${SEAHUB_INIT_SCRIPT}"
     perl -i -ape 's{^case}{before_start;check_init_admin;exit 0;\ncase}' "${SEAHUB_INIT_SCRIPT}"
     bash "${SEAHUB_INIT_SCRIPT}" start
+    cat > "${SEADAV_CONF}" << EOF
+[WEBDAV]
+enabled = true
+port = 8080
+fastcgi = true
+share_name = /seafdav
+EOF
     rm -f "${SEAHUB_INIT_SCRIPT}"
     touch "${TOKEN}"
 fi
